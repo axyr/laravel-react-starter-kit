@@ -10,6 +10,9 @@ See the React frontend repository:
 
 https://github.com/axyr/laravel-react-frontend
 
+
+![Screenshot](./docs/screenshot.png)
+
 ---
 
 ## ⚡️ Why use this kit?
