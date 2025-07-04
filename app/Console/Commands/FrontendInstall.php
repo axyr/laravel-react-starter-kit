@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
@@ -11,6 +12,7 @@ class FrontendInstall extends Command
     protected $signature = 'frontend:install
         {--directory=frontend : The directory to install the frontend into}
         {--repository=https://github.com/axyr/laravel-react-frontend : The repository to clone from}
+        {--fresh : Install from scratch}
     ';
 
     protected $description = 'Install the React frontend';
@@ -19,6 +21,15 @@ class FrontendInstall extends Command
     {
         $targetDir = base_path($this->option('directory'));
         $repoUrl = $this->option('repository');
+        $fresh = $this->option('fresh');
+
+        if($fresh) {
+            $this->info('Remove frontend for a fresh start.');
+            $filesystem = new Filesystem();
+            if ($filesystem->isDirectory($targetDir)) {
+                $filesystem->deleteDirectory($targetDir);
+            }
+        }
 
         if (file_exists($targetDir)) {
             $this->error("Directory {$targetDir} already exists.");
@@ -43,6 +54,14 @@ class FrontendInstall extends Command
 
         if ($process->isSuccessful()) {
             $this->info('Frontend installed successfully.');
+
+            // Remove the .git directory
+            $filesystem = new Filesystem();
+            $gitDir = rtrim($targetDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.git';
+
+            if ($filesystem->isDirectory($gitDir)) {
+                $filesystem->deleteDirectory($gitDir);
+            }
         } else {
             $this->error('Failed to install frontend.');
         }
