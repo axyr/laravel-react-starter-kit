@@ -1,61 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel React Starter Kit (Fortify & Sanctum)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel starter kit with a standalone React + [ShadCN UI](https://ui.shadcn.com) frontend.
 
-## About Laravel
+This kit uses the same frontend as the new Laravel React Kit, but **without Inertia**. It’s designed for projects where the frontend and backend are fully decoupled.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ⚡️ Why use this kit?
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Laravel Sanctum and Fortify make authentication with a separate frontend possible - but not always simple. You need to configure CORS, session domains, and cross-origin cookies correctly.
 
-## Learning Laravel
+This starter kit handles that setup for you. It works out of the box, so you can focus on building your app - not fixing config issues.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🔧 Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```sh
+laravel new --using=axyr/laravel-react-starter-kit my-project
+cd my-project
+php artisan migrate
+composer run dev
+```
 
-## Laravel Sponsors
+> The React frontend will be installed in the ~/frontend directory.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+This separation is intentional to highlight the decoupled architecture. You can build and deploy the frontend and backend independently - for example, deploy the frontend as a static site to S3 and the backend as an API.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🔌 Why not Inertia?
+Inertia.js is a great tool for backend developers who want to build dynamic frontends using React or Vue, without fully adopting a traditional SPA architecture. It removes the need to duplicate routes between the frontend and backend and provides server-side rendering out of the box.
 
-## Contributing
+However, Inertia tightly couples the frontend to the Laravel backend. In some cases, this is not desirable—especially when:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- You work in larger teams with dedicated frontend developers who don't want to—or can't—work within a Laravel backend environment.
+- The frontend is developed, deployed, and hosted independently from the backend.
+- You prefer the flexibility and separation of concerns offered by a fully decoupled architecture.
 
-## Code of Conduct
+In these scenarios, Inertia is not the right fit.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Ultimately, it comes down to preference and project structure. Personally, I’ve grown to prefer frontends that communicate with the backend exclusively through REST/JSON APIs. This approach gives more flexibility and clearer boundaries between frontend and backend responsibilities.
 
-## Security Vulnerabilities
+If that sounds like your workflow too, this starter kit is made for you.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🔍 Inertia vs. Decoupled SPA: Key Differences
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Feature / Concern               | **Inertia.js**                                    | **Decoupled SPA** (this Starter Kit)                  |
+| ------------------------------- | ------------------------------------------------- | ----------------------------------------------------- |
+| **Architecture**                | Tightly coupled                                   | Fully separated frontend & backend                    |
+| **Routing**                     | Laravel handles routing                           | React handles routing                                 |
+| **Deployment**                  | Frontend bundled with Laravel                     | Frontend and backend deployed independently           |
+| **Best for**                    | Full-stack Laravel teams                          | Teams with separate backend/frontend responsibilities |
+| **API Communication**           | Implicit via Laravel controllers                  | Explicit REST/JSON APIs                               |
+| **Frontend Hosting**            | Served via Laravel                                | Can be hosted on S3, Vercel, Netlify, etc.            |
+| **Frontend Flexibility**        | Bound to Laravel blade/inertia lifecycle          | 100% JavaScript stack freedom                         |
+| **SSR (Server-Side Rendering)** | Included                                          | Optional (e.g., via Next.js if needed)                |
+| **Learning Curve**              | Lower for Laravel devs, no API boilerplate needed | Requires clear API design and frontend skills         |
+
+---
+
+## ✅ Features
+- ✅ Fully decoupled React + ShadCN UI frontend
+- ✅ Laravel Fortify + Sanctum authentication
+- ✅ Pure REST/JSON-based communication
+- ✅ No Inertia or Blade required
+- ✅ Suitable for multi-domain deployments
+
+## ⚙️ Preconfigured .env Settings
+
+The following settings are preconfigured to support cross-origin auth:
+
+```dotenv
+APP_URL=http://localhost:8000
+APP_FRONTEND_URL=http://localhost:5173
+SANCTUM_STATEFUL_DOMAINS=localhost
+SESSION_SAME_SITE=lax
+SESSION_DOMAIN=localhost
+```
