@@ -2,7 +2,13 @@
 
 A Laravel starter kit with a standalone React + [ShadCN UI](https://ui.shadcn.com) frontend.
 
-This kit uses the same frontend as the new Laravel React Kit, but **without Inertia**. It’s designed for projects where the frontend and backend are fully decoupled.
+This kit uses a similar frontend as the new Laravel React Kit, but **without Inertia**. It’s designed for projects where the frontend and backend are fully decoupled.
+
+The frontend can also be used standalone.
+
+See the React frontend repository:
+
+https://github.com/axyr/laravel-react-frontend
 
 ---
 
@@ -26,6 +32,8 @@ composer run dev
 > The React frontend will be installed in the ~/frontend directory.
 
 This separation is intentional to highlight the decoupled architecture. You can build and deploy the frontend and backend independently - for example, deploy the frontend as a static site to S3 and the backend as an API.
+
+> You can change the installation directory of the frontend in the FrontendInstall command.
 
 ---
 

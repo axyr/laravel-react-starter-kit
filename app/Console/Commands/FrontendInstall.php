@@ -10,7 +10,7 @@ class FrontendInstall extends Command
 {
     protected $signature = 'frontend:install
         {--directory=frontend : The directory to install the frontend into}
-        {--repository=https://github.com/axyr/laravel-tractor-react.git : Ther repository to clone from}
+        {--repository=https://github.com/axyr/laravel-react-frontend : The repository to clone from}
     ';
 
     protected $description = 'Install the React frontend';
