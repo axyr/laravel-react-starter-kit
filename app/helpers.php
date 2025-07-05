@@ -8,7 +8,7 @@ function frontendUrl($path = null, $parameters = []): UrlGenerator|string
     return with(clone url(), static function (UrlGenerator $urlGenerator) use ($path, $parameters) {
         $root = config('app.frontend_url');
 
-        $urlGenerator->forceRootUrl($root);
+        $urlGenerator->useOrigin($root);
 
         if (is_null($path)) {
             return $urlGenerator;
