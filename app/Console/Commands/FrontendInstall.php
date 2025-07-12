@@ -104,12 +104,15 @@ class FrontendInstall extends Command
     protected function fixAppUrl(): void
     {
         // Laravel installer adds port to existing port
-
+        $this->info('Fix incorrect port');
+        
         $this->replaceInFile(
             '8000:8000',
             '8000',
             base_path('.env')
         );
+
+        $this->call('config:clear');
     }
 
     protected function replaceInFile(string|array $search, string|array $replace, string $file)
