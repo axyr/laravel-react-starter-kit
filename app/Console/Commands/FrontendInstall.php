@@ -23,8 +23,6 @@ class FrontendInstall extends Command
         $repoUrl = $this->option('repository');
         $fresh = $this->option('fresh');
 
-        $this->fixAppUrl();
-
         if ($fresh) {
             $this->info('Remove frontend for a fresh start.');
             $filesystem = new Filesystem();
@@ -99,27 +97,5 @@ class FrontendInstall extends Command
         } catch (\Throwable $e) {
             $this->error('Failed to write frontend environment file: ' . $e->getMessage());
         }
-    }
-
-    protected function fixAppUrl(): void
-    {
-        // Laravel installer adds port to existing port
-        $this->info('Fix incorrect port in ' .  base_path('.env'));
-
-        $this->replaceInFile(
-            'APP_URL=http://localhost:8000:8000',
-            'APP_URL=http://localhost:8000',
-            base_path('.env')
-        );
-
-        $this->call('config:clear');
-    }
-
-    protected function replaceInFile(string|array $search, string|array $replace, string $file)
-    {
-        file_put_contents(
-            $file,
-            str_replace($search, $replace, file_get_contents($file))
-        );
     }
 }
