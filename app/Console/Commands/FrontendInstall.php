@@ -19,8 +19,6 @@ class FrontendInstall extends Command
 
     public function handle(): void
     {
-        $this->call('config:clear');
-
         $targetDir = base_path($this->option('directory'));
         $repoUrl = $this->option('repository');
         $fresh = $this->option('fresh');
