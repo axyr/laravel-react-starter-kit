@@ -23,7 +23,9 @@ class FrontendInstall extends Command
         $repoUrl = $this->option('repository');
         $fresh = $this->option('fresh');
 
-        if($fresh) {
+        $this->fixAppUrl();
+
+        if ($fresh) {
             $this->info('Remove frontend for a fresh start.');
             $filesystem = new Filesystem();
             if ($filesystem->isDirectory($targetDir)) {
@@ -99,4 +101,22 @@ class FrontendInstall extends Command
         }
     }
 
+    protected function fixAppUrl(): void
+    {
+        // Laravel installer adds port to existing port
+
+        $this->replaceInFile(
+            '8000:8000',
+            '8000',
+            base_path('.env')
+        );
+    }
+
+    protected function replaceInFile(string|array $search, string|array $replace, string $file)
+    {
+        file_put_contents(
+            $file,
+            str_replace($search, $replace, file_get_contents($file))
+        );
+    }
 }
