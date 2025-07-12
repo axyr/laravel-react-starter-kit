@@ -104,11 +104,11 @@ class FrontendInstall extends Command
     protected function fixAppUrl(): void
     {
         // Laravel installer adds port to existing port
-        $this->info('Fix incorrect port');
-        
+        $this->info('Fix incorrect port in ' .  base_path('.env'));
+
         $this->replaceInFile(
-            '8000:8000',
-            '8000',
+            'APP_URL=http://localhost:8000:8000',
+            'APP_URL=http://localhost:8000',
             base_path('.env')
         );
 
