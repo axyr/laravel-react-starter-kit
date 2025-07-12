@@ -87,7 +87,7 @@ class FrontendInstall extends Command
     protected function setEnvironmentVariables(string $targetDir): void
     {
         $env = 'VITE_APP_NAME=' . config('app.name') . "\n";
-        $env .= 'VITE_API_BASE_URL=' . Str::finish(config('app.url'), '/') . "api\n";
+        $env .= "VITE_API_BASE_URL=http://localhost:8000/api\n";
 
         $envPath = rtrim($targetDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.env';
 
