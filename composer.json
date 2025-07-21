@@ -70,6 +70,13 @@
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "merge-plugin": {
+            "merge-extra": true,
+            "merge-extra-deep": true,
+            "include": [
+                "app-modules/*/composer.json"
+            ]
         }
     },
     "config": {
